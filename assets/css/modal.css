@@ -1,0 +1,263 @@
+/* ══════════════════════════════════════════
+   MODAL — card centralizado na tela
+   - Overlay escuro atrás
+   - Card com largura fixa e cor do tipo
+   - Imagem do pokémon no topo do card
+   - Painel branco com stats desliza por baixo
+   ══════════════════════════════════════════ */
+
+/* Overlay escuro — centraliza o card */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.55);
+    justify-content: center;
+    align-items: center;
+    animation: fadeOverlay .2s ease;
+}
+.modal-overlay.open { display: flex; }
+
+@keyframes fadeOverlay {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* ── CARD (o modal em si) ── */
+.modal-bg {
+    position: relative;
+    width: 340px;
+    max-height: 90vh;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 32px;
+    box-shadow: 0 24px 60px rgba(0,0,0,.35);
+    animation: cardIn .3s ease;
+}
+
+@keyframes cardIn {
+    from { transform: scale(.93); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+}
+
+/* Cores por tipo */
+.modal-bg.normal   { background: #a6a877; }
+.modal-bg.grass    { background: #77c850; }
+.modal-bg.fire     { background: #ee7f30; }
+.modal-bg.water    { background: #678fee; }
+.modal-bg.electric { background: #f7cf2e; }
+.modal-bg.ice      { background: #98d5d7; }
+.modal-bg.ground   { background: #dfbf69; }
+.modal-bg.flying   { background: #a98ff0; }
+.modal-bg.poison   { background: #a040a0; }
+.modal-bg.fighting { background: #bf3029; }
+.modal-bg.psychic  { background: #f65687; }
+.modal-bg.dark     { background: #725847; }
+.modal-bg.rock     { background: #b8a137; }
+.modal-bg.bug      { background: #a8b720; }
+.modal-bg.ghost    { background: #6e5896; }
+.modal-bg.steel    { background: #b9b7cf; }
+.modal-bg.dragon   { background: #6f38f6; }
+.modal-bg.fairy    { background: #f9aec7; }
+
+/* ── TOPO: número, nome, tipos ── */
+.modal-top-info {
+    width: 100%;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.modal-top-row {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-number {
+    color: rgba(255,255,255,.75);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.modal-name {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
+    text-transform: capitalize;
+    margin: 0;
+}
+
+.modal-close {
+    background: rgba(0,0,0,.15);
+    border: none;
+    border-radius: 50%;
+    width: 28px; height: 28px;
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .2s;
+    flex-shrink: 0;
+}
+.modal-close:hover { background: rgba(0,0,0,.3); }
+
+.modal-types {
+    display: flex;
+    gap: 6px;
+    padding: 0; margin: 0;
+    list-style: none;
+}
+.modal-types li {
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    background: rgba(255,255,255,.28);
+    text-transform: capitalize;
+}
+
+/* ── IMAGEM DO POKÉMON ── */
+.modal-poke-img {
+    width: 160px;
+    height: 160px;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 20px rgba(0,0,0,.25));
+    margin-top: 8px;
+    position: relative;
+    z-index: 2;   /* fica sobre o painel branco */
+    animation: floatIn .4s ease;
+}
+
+@keyframes floatIn {
+    from { transform: translateY(16px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ── PAINEL BRANCO deslizando de baixo ── */
+.modal-panel-sheet {
+    position: relative;    /* não absolute — faz parte do fluxo do card */
+    width: 100%;
+    background: #fff;
+    border-radius: 20px 20px 0 0;
+    padding: 24px 20px 28px;
+    overflow-y: auto;
+    z-index: 1;
+    animation: slideUp .35s cubic-bezier(.25,.46,.45,.94);
+    /* Sobe um pouco atrás da imagem */
+    margin-top: -20px;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0); }
+}
+
+/* ── TÍTULO BASE STATS ── */
+.modal-stats-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #222;
+    margin: 0 0 14px 0;
+}
+
+/* ── LINHAS DE STAT ── */
+.stat-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.stat-name {
+    width: 105px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #888;
+    flex-shrink: 0;
+    text-transform: capitalize;
+}
+
+.stat-val {
+    width: 26px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #333;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.stat-bar-bg {
+    flex: 1;
+    height: 5px;
+    background: #eee;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.stat-bar {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 1s cubic-bezier(.25,.46,.45,.94);
+}
+
+.bar-low  { background: #ef5350; }
+.bar-mid  { background: #66bb6a; }
+.bar-high { background: #42a5f5; }
+
+/* ── PESO E ALTURA ── */
+.modal-wh-row {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.modal-wh-item { text-align: center; }
+
+.modal-wh-value {
+    font-size: 17px;
+    font-weight: 700;
+    color: #222;
+}
+
+.modal-wh-label {
+    font-size: 11px;
+    color: #aaa;
+    font-weight: 500;
+    margin-top: 2px;
+}
+
+/* ── LOADING ── */
+.modal-loading {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,.5);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #555;
+    z-index: 10;
+}
+.modal-loading.visible { display: flex; }
+
+.modal-spinner {
+    width: 32px; height: 32px;
+    border: 4px solid #eee;
+    border-top-color: #6c79db;
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }

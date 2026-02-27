@@ -6,8 +6,10 @@ const limit = 10
 let offset = 0;
 
 function convertPokemonToLi(pokemon) {
+    // data-name="${pokemon.name}" — guarda o nome no elemento HTML
+    // O modal.js lê esse valor quando o usuário clica no card
     return `
-        <li class="pokemon ${pokemon.type}">
+        <li class="pokemon ${pokemon.type}" data-name="${pokemon.name}">
             <span class="number">#${pokemon.number}</span>
             <span class="name">${pokemon.name}</span>
 
@@ -39,7 +41,6 @@ loadMoreButton.addEventListener('click', () => {
     if (qtdRecordsWithNexPage >= maxRecords) {
         const newLimit = maxRecords - offset
         loadPokemonItens(offset, newLimit)
-
         loadMoreButton.parentElement.removeChild(loadMoreButton)
     } else {
         loadPokemonItens(offset, limit)

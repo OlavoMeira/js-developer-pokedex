@@ -84,6 +84,13 @@
     margin: .5rem;
     padding: 1rem;
     border-radius: 1rem;
+    cursor: pointer;
+    transition: transform .15s, box-shadow .15s;
+}
+
+.pokemon:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,.18);
 }
 
 .pokemon .number {
